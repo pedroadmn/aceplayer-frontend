@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivateAccountComponent } from './activate-account.component';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
 describe('ActivateAccountComponent', () => {
   let component: ActivateAccountComponent;
@@ -8,9 +9,9 @@ describe('ActivateAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActivateAccountComponent]
-    })
-    .compileComponents();
+      imports: [ActivateAccountComponent],
+      providers: [provideHttpClient()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ActivateAccountComponent);
     component = fixture.componentInstance;
