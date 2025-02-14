@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
@@ -27,6 +27,7 @@
     "angular-code-input": "^2.0.0",
     "bootstrap": "^5.3.3",
     "ng-openapi-gen": "^0.52.0",
+    "pg": "^8.11.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
