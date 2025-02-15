@@ -1,0 +1,62 @@
+name: AcePlayer Frontend Pipeline
+
+on:
+  push:
+    branches:
+      - ci/pipeline
+    paths:
+      - /**
+      - "compose.yml"
+      - .github/workflows/*-frontend.yml
+
+jobs:
+  build-image:
+    name: Build Frontend Docker image
+    runs-on: ubuntu
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Extract project version
+        id: extract_version
+        run: |
+          // apt-get install jq
+          echo "VERSION=$(jq -r '.version' package.json')" >> $GITHUB_OUTUPUT
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/aceplayer-ui:${{ steps.extract_version.outputs.VERSION }},${{ secrets.DOCKERHUB_USERNAME }}/aceplayer-ui:latest
+          build-args: |
+            PROFILE=prod
+            APP_VERSION=${{ steps.extract_version.outputs.VERSION }}
+
+  deploy:
+    name: Deploy Frontend
+    runs-on: ubuntu
+    needs: [build-image]
+    steps:
+      - name: Create deployment folder
+        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
+
+      - name: Copy docker-compose file
+        run: scp compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/compose.yml
+
+      - name: Set ENV variable and deploy
+        run: |
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          cd ci-cd
+          docker compose -f compose.yml pull -q
+          docker compose -f compose.yml up -d
+          EOF
