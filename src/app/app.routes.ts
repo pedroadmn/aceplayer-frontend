@@ -1,19 +1,23 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/login/login.component';
-import { RegisterComponent } from './features/register/register.component';
 import { ActivateAccountComponent } from './features/activate-account/activate-account.component';
+import { AuthFormComponent } from './features/auth/auth-form/auth-form.component';
 
 export const routes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
+    path: 'auth',
+    component: AuthFormComponent,
   },
   {
     path: 'activate-account',
     component: ActivateAccountComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: 'auth',
   },
 ];

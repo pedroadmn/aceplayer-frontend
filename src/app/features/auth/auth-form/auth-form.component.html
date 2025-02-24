@@ -1,0 +1,97 @@
+<div class="container" [ngClass]="{ active: isRegisterMode() }">
+  <div class="form-box login">
+    <form action="">
+      <h1>Login</h1>
+      <div class="input-box">
+        <input
+          type="text"
+          name="email"
+          placeholder="Username"
+          [(ngModel)]="authRequest.email"
+          required
+        />
+        <i class="bi bi-person-fill"></i>
+      </div>
+      <div class="input-box">
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          [(ngModel)]="authRequest.password"
+          required
+        />
+        <i class="bi bi-lock-fill"></i>
+      </div>
+      <div class="forgot-link">
+        <a href="#">Forgot password?</a>
+      </div>
+      <button class="btn" (click)="login()">Login</button>
+      <p>or login with social platforms</p>
+      <div class="social-icons">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-google"></i></a>
+        <a href="#"><i class="bi bi-github"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </form>
+  </div>
+
+  <div class="form-box register">
+    <form action="">
+      <h1>Registration</h1>
+      <div class="input-box">
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          [(ngModel)]="registerRequest.firstname"
+          required
+        />
+        <i class="bi bi-person-fill"></i>
+      </div>
+      <div class="input-box">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          [(ngModel)]="registerRequest.email"
+          required
+        />
+        <i class="bi bi-envelope-fill"></i>
+      </div>
+      <div class="input-box">
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          [(ngModel)]="registerRequest.password"
+          required
+        />
+        <i class="bi bi-lock-fill"></i>
+      </div>
+      <button class="btn" (click)="register()">Register</button>
+      <p>or register with social platforms</p>
+      <div class="social-icons">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-google"></i></a>
+        <a href="#"><i class="bi bi-github"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </form>
+  </div>
+
+  <div class="toggle-box">
+    <div class="toggle-panel toggle-left">
+      <h1>Hello, Welcome</h1>
+      <p>Don't have an account?</p>
+      <button class="btn register-btn" (click)="toggleRegister()">
+        Register
+      </button>
+    </div>
+    <div class="toggle-panel toggle-right">
+      <h1>Welcome Back!</h1>
+      <p>Already have an account?</p>
+      <button class="btn login-btn" (click)="toggleLogin()">Login</button>
+    </div>
+  </div>
+</div>
